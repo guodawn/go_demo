@@ -18,4 +18,4 @@ func (c *BaseController ) CheckLogin() {
 		c.Redirect(loginUrl, 302)
 		c.StopRun()
 	}
-}
+} 
