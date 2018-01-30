@@ -13,9 +13,9 @@
 </form>
 
 
-
 <script>
     $(function(){
+
      $(".btn_submit").on('click' ,function(){
       var username = $("#username").val();
       var password = $("#password").val();
@@ -23,13 +23,15 @@
         type : "POST",
         url  : "{{.formSubmitUrl}}",
         async : false,
+        data : "name=" + username + "&pwd=" + password,
         dataType:"json",
         success: function (data) {
           console.log(data)
-
-          data = {"code":"0", "message":"登录成功"};
-            if(data.code == 0){
+            if(data.code == "0"){
                 window.location.href = "{{.homeUrl}}"
+            }else{
+              alert(data.msg)
+              return
             }
         }
       });

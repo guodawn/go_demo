@@ -8,13 +8,6 @@ type UserController struct {
 	BaseController
 }
 
-type Ret struct {
-	Code int `json:"code"`
-	Msg  string `json:"msg"`
-}
-
-
-
 func (c *UserController) Login() {
 	c.Layout = "common/layout.tpl"
 	c.TplName = "user/login.tpl"
@@ -23,15 +16,20 @@ func (c *UserController) Login() {
 }
 
 func (c *UserController) DoLogin() {
-	c.Data["json"] = Ret{Code : 0, Msg : "登录成功"}
+	user := new(models.User)
+
+	user.Name = c.GetString("name")
+	inputPwd := c.GetString("pwd")
+	rt := user.CheckLogin(inputPwd)
+	c.Data["json"] = models.Error{Code: rt.Code, Msg: rt.Msg}
 	c.ServeJSON()
 }
 
-func (c *UserController) Add() {
-	user := &models.User{Name:"Guodawn", Pwd:"123"}
+/*func (c *UserController) Add() {
+	user := &models.User{Name: "Guodawn", Pwd: "123"}
 	rt := user.Add()
 	if rt {
 
 	}
 	c.ServeJSON()
-}
+}*/
